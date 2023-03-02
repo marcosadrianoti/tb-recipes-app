@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -9,12 +9,16 @@ function Login() {
     // Verifica se o e-mail é válido
     const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const emailValid = regexEmail.test(email);
-    const minimalCharacters = 5;
+    const minimalCharacters = 6;
 
     // Define se o formulário é válido ou não
     if (emailValid && password.length > minimalCharacters) setIsDisable(false);
     else setIsDisable(true);
   }, [password, email]);
+
+  useMemo(() => {
+    validForm();
+  }, [validForm]);
 
   return (
     <div>
@@ -26,10 +30,7 @@ function Login() {
           name="email"
           className="input-email"
           value={ email }
-          onChange={ ({ target }) => {
-            setEmail(target.value);
-            validForm();
-          } }
+          onChange={ ({ target }) => setEmail(target.value) }
         />
       </label>
 
@@ -41,10 +42,7 @@ function Login() {
           name="password"
           className="input-password"
           value={ password }
-          onChange={ ({ target }) => {
-            setPassword(target.value);
-            validForm();
-          } }
+          onChange={ ({ target }) => setPassword(target.value) }
         />
       </label>
 

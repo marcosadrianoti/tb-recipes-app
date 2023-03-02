@@ -26,6 +26,6 @@ describe('Teste do componente Login', () => {
       fireEvent.change(emailInput, { target: { value: 'teste@teste.com' } });
       fireEvent.change(passwordInput, { target: { value: '1234567' } });
     });
-    fireEvent.click(submitButton);
+    expect(submitButton).toBeEnabled();
   });
 });
