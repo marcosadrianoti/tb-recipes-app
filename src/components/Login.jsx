@@ -1,16 +1,18 @@
 import { useState, useCallback, useMemo } from 'react';
+import { useHistory } from 'react-router-dom';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isDisabled, setIsDisable] = useState(true);
 
+  const history = useHistory();
+
   const validForm = useCallback(() => {
     // Verifica se o e-mail é válido
     const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const emailValid = regexEmail.test(email);
     const minimalCharacters = 6;
-
     // Define se o formulário é válido ou não
     if (emailValid && password.length > minimalCharacters) setIsDisable(false);
     else setIsDisable(true);
@@ -51,6 +53,11 @@ function Login() {
         type="button"
         name="enter-button"
         className="enter-button"
+        onClick={ () => {
+          const user = { email };
+          localStorage.setItem('user', JSON.stringify(user));
+          history.push('/meals');
+        } }
         disabled={ isDisabled }
       >
         Entrar
