@@ -8,6 +8,7 @@ function Footer() {
   return (
     <div data-testid="footer" className="footer">
       <button
+        className="footer-btn"
         onClick={ () => {
           history.push('/drinks');
         } }
@@ -15,6 +16,7 @@ function Footer() {
         <img src={ drinkIcon } alt="drinkIcon" data-testid="drinks-bottom-btn" />
       </button>
       <button
+        className="footer-btn"
         onClick={ () => {
           history.push('/meals');
         } }
