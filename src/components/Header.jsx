@@ -7,6 +7,7 @@ function Header() {
   const [isHidden, setIsHidden] = useState(false);
   const { pathname } = useLocation();
   const history = useHistory();
+  // const { pathname } = history.location;
 
   function urlToTitle(url) {
     if (url !== '/' && !url.includes(':id')) {

@@ -1,14 +1,16 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import drinkIcon from '../images/drinkIcon.svg';
 import mealIcon from '../images/mealIcon.svg';
 import renderWithRouter from '../helpers/renderWithRouter';
-import Recipes from '../pages/Recipes';
+// import Recipes from '../pages/Recipes';
+import App from '../App';
 
 describe('Implemente o componente footer', () => {
   it('Verifica se o menu e os ícones são renderizados na tela', () => {
-    render(<Recipes />);
+    // render(<Recipes />);
+    renderWithRouter(<App />, '/meals');
     const footerElement = screen.getByTestId('footer');
     const drinkIconElement = screen.getByTestId('drinks-bottom-btn');
     const mealIconElement = screen.getByTestId('meals-bottom-btn');
@@ -21,7 +23,8 @@ describe('Implemente o componente footer', () => {
   });
 
   it('Ao clicar no ícone de bedidas é redirecionado para a page /drinks', () => {
-    const { history } = renderWithRouter(<Recipes />);
+    // const { history } = renderWithRouter(<Recipes />);
+    const { history } = renderWithRouter(<App />, '/meals');
     const drinkIconElement = screen.getByTestId('drinks-bottom-btn');
 
     userEvent.click(drinkIconElement);
@@ -32,7 +35,8 @@ describe('Implemente o componente footer', () => {
   });
 
   it('Ao clicar no ícone de comida é redirecionado para a page /meals', () => {
-    const { history } = renderWithRouter(<Recipes />);
+    // const { history } = renderWithRouter(<Recipes />);
+    const { history } = renderWithRouter(<App />, '/meals');
     const mealIconElement = screen.getByTestId('meals-bottom-btn');
 
     userEvent.click(mealIconElement);
