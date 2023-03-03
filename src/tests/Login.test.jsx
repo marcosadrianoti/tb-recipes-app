@@ -1,11 +1,10 @@
 import React from 'react';
 import { screen, render, fireEvent } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
-// import { useHistory } from 'react-router-dom';
 import { Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import App from '../App';
-import Login from '../components/Login';
+import Login from '../pages/Login';
 
 describe('Teste do componente Login', () => {
   it('Teste se a página renderiza os inputs e buttons', () => {
