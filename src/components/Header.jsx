@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 
 function Header() {
   const [isHidden, setIsHidden] = useState(false);
   const { pathname } = useLocation();
+  const history = useHistory();
 
   function urlToTitle(url) {
     if (url !== '/' && !url.includes(':id')) {
@@ -24,12 +25,30 @@ function Header() {
   return (
     <div>
       <h1 data-testid="page-title">{ urlToTitle(pathname) }</h1>
-      <img src={ profileIcon } data-testid="profile-top-btn" alt="profile-top-btn" />
-      { !isHidden && (<img
-        src={ searchIcon }
-        data-testid="search-top-btn"
-        alt="search-top-btn"
-      />) }
+      <button
+        onClick={ () => {
+          history.push('/profile');
+        } }
+      >
+        <img
+          src={ profileIcon }
+          data-testid="profile-top-btn"
+          alt="profile-top-btn"
+        />
+      </button>
+      { !isHidden && (
+        <button
+          onClick={ () => {
+            history.push('/profile');
+          } }
+        >
+          <img
+            src={ searchIcon }
+            data-testid="search-top-btn"
+            alt="search-top-btn"
+          />
+        </button>
+      ) }
 
     </div>
   );
