@@ -3,24 +3,25 @@ import { useLocation, useHistory } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 
+export function urlToTitle(url) {
+  if (url !== '/' && !url.includes(':id')) {
+    const getWords = url.replace('/', '').replace('-', ' '); // Tira o '/' e substitui o '-' por espaço...
+    const title = getWords.replace(/\b\w/g, (letra) => letra.toUpperCase()); // Troca a primeira letra de cada palavra para maiúscula.
+    return title;
+  }
+}
+
 function Header() {
-  const [isHidden, setIsHidden] = useState(false);
+  const [isHiddenSearchTopBtn, setIsHiddenSearchTopBtn] = useState(false);
+  const [isHiddenTextForSearch, setIsHiddenTextForSearch] = useState(false);
+  const [textForSearch, setTextForSearch] = useState('');
   const { pathname } = useLocation();
   const history = useHistory();
-  // const { pathname } = history.location;
-
-  function urlToTitle(url) {
-    if (url !== '/' && !url.includes(':id')) {
-      const getWords = url.replace('/', '').replace('-', ' '); // Tira o '/' e substitui o '-' por espaço...
-      const title = getWords.replace(/\b\w/g, (letra) => letra.toUpperCase()); // Troca a primeira letra de cada palavra para maiúscula.
-      return title;
-    }
-  }
 
   useEffect(() => {
     if (pathname === '/profile'
     || pathname === '/done-recipes'
-    || pathname === '/favorite-recipes') { setIsHidden(true); }
+    || pathname === '/favorite-recipes') { setIsHiddenSearchTopBtn(true); }
   }, [pathname]);
 
   return (
@@ -37,10 +38,10 @@ function Header() {
           alt="profile-top-btn"
         />
       </button>
-      { !isHidden && (
+      { !isHiddenSearchTopBtn && (
         <button
           onClick={ () => {
-            history.push('/profile');
+            setIsHiddenTextForSearch(!isHiddenTextForSearch);
           } }
         >
           <img
@@ -50,7 +51,20 @@ function Header() {
           />
         </button>
       ) }
-
+      { isHiddenTextForSearch && (
+        <div className="seach-container">
+          <label htmlFor="input-email">
+            <input
+              data-testid="search-input"
+              type="text"
+              name="search-input"
+              className="search-input"
+              value={ textForSearch }
+              onChange={ ({ target: { value } }) => setTextForSearch(value) }
+            />
+          </label>
+        </div>
+      ) }
     </div>
   );
 }
