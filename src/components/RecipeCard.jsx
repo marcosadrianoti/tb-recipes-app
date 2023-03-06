@@ -1,14 +1,35 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import RecipesContext from '../context/RecipesContext';
 
 function RecipeCard({ recipe = {}, index }) {
+  const { fetchDetails } = useContext(RecipesContext);
+  const history = useHistory();
+
   const {
+    idMeal,
+    idDrink,
     strMealThumb = '',
     strDrinkThumb = '',
     strMeal = '',
     strDrink = '' } = recipe;
+
+  const goDetailsRecipe = async () => {
+    await fetchDetails(recipe);
+
+    if (idMeal) history.push(`/meals/:${idMeal}`);
+    if (idDrink) history.push(`/drinks/:${idDrink}`);
+
+    // path="/meals/:id"
+    // path="/drinks/:id"
+
+    // history.push('/')
+  };
+
   return (
-    <div
+    <button
+      onClick={ () => goDetailsRecipe() }
       className="recipe-card"
       data-testid={ `${index}-recipe-card` }
     >
@@ -18,7 +39,7 @@ function RecipeCard({ recipe = {}, index }) {
         data-testid={ `${index}-card-img` }
       />
       <span data-testid={ `${index}-card-name` }>{ strMeal || strDrink }</span>
-    </div>
+    </button>
   );
 }
 
