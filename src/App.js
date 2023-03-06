@@ -11,7 +11,6 @@ import './App.css';
 function App() {
   return (
     <Switch>
-      {/* <Route exact path="/" component={ Login } /> */}
       <Route path="/meals/:id/in-progress" component={ Meals } />
       <Route path="/drinks/:id/in-progress" component={ Drinks } />
       <Route path="/meals/:id" component={ Meals } />

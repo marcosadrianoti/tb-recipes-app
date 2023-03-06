@@ -9,11 +9,11 @@ import RecipesProvider from './context/RecipesProvider';
 ReactDOM
   .createRoot(document.getElementById('root'))
   .render(
-    <BrowserRouter>
-      <RecipesProvider>
+    <RecipesProvider>
+      <BrowserRouter>
         <App />
-      </RecipesProvider>
-    </BrowserRouter>,
+      </BrowserRouter>
+    </RecipesProvider>,
   );
 
 // If you want your app to work offline and load faster, you can change
