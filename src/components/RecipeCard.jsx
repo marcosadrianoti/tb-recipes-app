@@ -18,13 +18,8 @@ function RecipeCard({ recipe = {}, index }) {
   const goDetailsRecipe = async () => {
     await fetchDetails(recipe);
 
-    if (idMeal) history.push(`/meals/:${idMeal}`);
-    if (idDrink) history.push(`/drinks/:${idDrink}`);
-
-    // path="/meals/:id"
-    // path="/drinks/:id"
-
-    // history.push('/')
+    if (idMeal) history.push(`/meals/${idMeal}`);
+    if (idDrink) history.push(`/drinks/${idDrink}`);
   };
 
   return (
