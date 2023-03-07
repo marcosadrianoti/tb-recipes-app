@@ -29,6 +29,7 @@ function RecipesProvider({ children }) {
       fetchDetails }),
     [meals, drinks, detailsRecipe, search],
   );
+
   useEffect(() => {
     getMeals(search).then((response) => setMeals(response));
     getDrinks(search).then((response) => setDrinks(response));

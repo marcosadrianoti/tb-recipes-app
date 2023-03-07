@@ -9,7 +9,7 @@ function RecipeDetails() {
   useEffect(() => {
     const typeRecipe = location.pathname.includes('drinks') ? 'drinks' : 'meals';
     getDetailsRecipe(id, typeRecipe);
-  });
+  }, [id, location]);
 
   return (
     <div>RecipeDetails</div>
