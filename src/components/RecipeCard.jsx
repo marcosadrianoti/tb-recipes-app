@@ -16,8 +16,14 @@ function RecipeCard({ recipe = {}, index }) {
         src={ strMealThumb || strDrinkThumb }
         alt={ `imagem da receita ${strMeal || strDrink}` }
         data-testid={ `${index}-card-img` }
+        className="recipe-image"
       />
-      <span data-testid={ `${index}-card-name` }>{ strMeal || strDrink }</span>
+      <span
+        data-testid={ `${index}-card-name` }
+        className="recipe-name"
+      >
+        { strMeal || strDrink }
+      </span>
     </div>
   );
 }
