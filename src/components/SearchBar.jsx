@@ -1,9 +1,12 @@
 import { useState } from 'react';
-import { fetchFilterRecipe } from '../services/fetchApi';
+import { useLocation } from 'react-router-dom';
+import { fetchFilterDrinksRecipe, fetchFilterMealsRecipe } from '../services/fetchApi';
 
 function SearcBar() {
   const [typeSearch, setTypeSearch] = useState('');
   const [textForSearch, setTextForSearch] = useState('');
+
+  const { pathname } = useLocation();
 
   return (
     <div className="search-bar">
@@ -58,7 +61,10 @@ function SearcBar() {
       <button
         data-testid="exec-search-btn"
         type="button"
-        onClick={ () => fetchFilterRecipe(typeSearch, textForSearch) }
+        onClick={ () => (pathname
+          .includes('drinks')
+          ? fetchFilterDrinksRecipe(typeSearch, textForSearch)
+          : fetchFilterMealsRecipe(typeSearch, textForSearch)) }
       >
         Search
 
