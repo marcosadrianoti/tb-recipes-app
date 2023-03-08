@@ -12,13 +12,13 @@ const FIRST_LETTER_DRINKS_FILTER = 'https://www.thecocktaildb.com/api/json/v1/1/
 const getMeals = async (search, qtd) => {
   const response = await fetch(`${MEALS_URL}${search}`);
   const data = await response.json();
-  return data.meals.slice(0, qtd);
+  return data.meals?.slice(0, qtd);
 };
 
 const getDrinks = async (search, qtd) => {
   const response = await fetch(`${DRINKS_URL}${search}`);
   const data = await response.json();
-  return data.drinks.slice(0, qtd);
+  return data.drinks?.slice(0, qtd);
 };
 
 const getDetailsRecipe = async (id, typeRecipe) => {
@@ -29,43 +29,29 @@ const getDetailsRecipe = async (id, typeRecipe) => {
   return data[typeRecipe][0];
 };
 
-const fetchFilter = async (url, textForSearch) => {
+const fetchFilter = async (url, textForSearch, type) => {
   const response = await fetch(`${url}${textForSearch}`);
   const data = await response.json();
-  return data;
+  return data[type];
 };
 
-const fetchFilterDrinksRecipe = async (filter, textForSearch) => {
-  try {
-    if (filter === 'ingredient') {
-      fetchFilter(INGREDIENT_DRINKS_URL_FILTER, textForSearch);
-    } if (filter === 'name') {
-      fetchFilter(NAME_DRINKS_URL_FILTER, textForSearch);
-    } if (filter === 'first-letter') {
-      if (textForSearch.length > 1) {
-        throw new Error('Your search must have only 1 (one) character');
-      }
-      fetchFilter(FIRST_LETTER_DRINKS_FILTER, textForSearch);
+const fetchFilterForType = (isType, typeSearch, text) => {
+  if (isType) {
+    if (typeSearch === 'ingredient') {
+      return fetchFilter(INGREDIENT_MEALS_URL_FILTER, text, 'meals');
+    } if (typeSearch === 'name') {
+      return fetchFilter(NAME_MEALS_URL_FILTER, text, 'meals');
+    } if (typeSearch === 'firstletter') {
+      return fetchFilter(FIRST_LETTER_MEALS_FILTER, text, 'meals');
     }
-  } catch (error) {
-    global.alert(error.message);
-  }
-};
-
-const fetchFilterMealsRecipe = async (filter, textForSearch) => {
-  try {
-    if (filter === 'ingredient') {
-      fetchFilter(INGREDIENT_MEALS_URL_FILTER, textForSearch);
-    } if (filter === 'name') {
-      fetchFilter(NAME_MEALS_URL_FILTER, textForSearch);
-    } if (filter === 'first-letter') {
-      if (textForSearch.length > 1) {
-        throw new Error('Your search must have only 1 (one) character');
-      }
-      fetchFilter(FIRST_LETTER_MEALS_FILTER, textForSearch);
+  } else {
+    if (typeSearch === 'ingredient') {
+      return fetchFilter(INGREDIENT_DRINKS_URL_FILTER, text, 'drinks');
+    } if (typeSearch === 'name') {
+      return fetchFilter(NAME_DRINKS_URL_FILTER, text, 'drinks');
+    } if (typeSearch === 'firstletter') {
+      return fetchFilter(FIRST_LETTER_DRINKS_FILTER, text, 'drinks');
     }
-  } catch (error) {
-    global.alert(error.message);
   }
 };
 
@@ -73,6 +59,5 @@ export {
   getMeals,
   getDrinks,
   getDetailsRecipe,
-  fetchFilterMealsRecipe,
-  fetchFilterDrinksRecipe,
+  fetchFilterForType,
 };

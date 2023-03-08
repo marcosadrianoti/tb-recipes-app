@@ -1,95 +1,88 @@
 import React from 'react';
-import { screen } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { act } from 'react-dom/test-utils';
 import renderWithRouter from '../helpers/renderWithRouter';
 import App from '../App';
-
-const INGREDIENT_RADIO = 'ingredient-search-radio';
-const SEARCH_BTN_SUBMIT = 'exec-search-btn';
+import fetch from '../../cypress/mocks/fetch';
 
 describe('Teste do componente SearchBar', () => {
-  it('Verifica se os elementos são renderizados', () => {
-    renderWithRouter(<App />, '/meals');
-    const searchBtn = screen.getByRole('button', { name: /search-top-btn/i });
-    expect(searchBtn).toBeInTheDocument();
-
-    userEvent.click(searchBtn);
-    const searchInput = screen.getByTestId('search-input');
-    const inputRadioIngredient = screen.getByTestId(INGREDIENT_RADIO);
-    const inputRadioName = screen.getByTestId('name-search-radio');
-    const inputRadioFirstLetter = screen.getByTestId('first-letter-search-radio');
-    const submitSearchBtn = screen.getByTestId(SEARCH_BTN_SUBMIT);
-    expect(searchInput).toBeInTheDocument();
-    expect(inputRadioIngredient).toBeInTheDocument();
-    expect(inputRadioName).toBeInTheDocument();
-    expect(inputRadioFirstLetter).toBeInTheDocument();
-    expect(submitSearchBtn).toBeInTheDocument();
+  beforeEach(() => {
+    global.alert = jest.fn();
+    global.fetch = jest.fn(fetch);
   });
-  it('Verifica se ao selecionar o radio ingredient a funcão é chamada', () => {
-    const setTypeSearchSpy = jest.spyOn(React, 'useState');
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+  it('Verifica funcionalidade do componente na rota meals', async () => {
     const { history } = renderWithRouter(<App />, '/meals');
-
-    const searchBtn = screen.getByRole('button', { name: /search-top-btn/i });
+    const searchBtn = await screen.findByRole('button', { name: /search-top-btn/i });
     userEvent.click(searchBtn);
-    const inputRadioIngredient = screen.getByTestId(INGREDIENT_RADIO);
 
-    act(() => {
-      userEvent.click(inputRadioIngredient);
-    });
+    const searchInput = await screen.findByTestId('search-input');
+    const inputRadioIngredient = screen.getByTestId('ingredient-search-radio');
+    const submitSearchBtn = screen.getByTestId('exec-search-btn');
 
-    expect(setTypeSearchSpy).toHaveBeenCalled();
-    const submitSearchBtn = screen.getByTestId(SEARCH_BTN_SUBMIT);
+    userEvent.click(inputRadioIngredient);
+    userEvent.type(searchInput, 'Chicken');
     userEvent.click(submitSearchBtn);
-    expect(history.location.pathname).toBe('/meals');
-    setTypeSearchSpy.mockRestore();
-  });
-  it('Verifica se ao selecionar o radio name a funcão é chamada', () => {
-    const setTypeSearchSpy = jest.spyOn(React, 'useState');
-    renderWithRouter(<App />, '/meals');
 
-    const searchBtn = screen.getByRole('button', { name: /search-top-btn/i });
-    userEvent.click(searchBtn);
+    await waitFor(() => {
+      screen.getByTestId('0-card-img');
+      screen.getByText(/brown stew chicken/i);
+    });
+
     const inputRadioName = screen.getByTestId('name-search-radio');
+    userEvent.click(inputRadioName);
+    userEvent.click(submitSearchBtn);
 
-    act(() => {
-      userEvent.click(inputRadioName);
+    await waitFor(() => {
+      screen.getByTestId('0-card-img');
+      screen.getByText(/chicken handi/i);
     });
 
-    expect(setTypeSearchSpy).toHaveBeenCalled();
-    setTypeSearchSpy.mockRestore();
-  });
-  it('Verifica se ao selecionar o radio first-letter a funcão é chamada', () => {
-    const setTypeSearchSpy = jest.spyOn(React, 'useState');
-    renderWithRouter(<App />, '/meals');
-
-    const searchBtn = screen.getByRole('button', { name: /search-top-btn/i });
-    userEvent.click(searchBtn);
     const inputRadioFirstLetter = screen.getByTestId('first-letter-search-radio');
-
-    act(() => {
-      userEvent.click(inputRadioFirstLetter);
+    userEvent.click(inputRadioFirstLetter);
+    userEvent.click(submitSearchBtn);
+    const TWO = 2;
+    await waitFor(() => {
+      expect(global.alert).toBeCalledTimes(TWO);
     });
 
-    expect(setTypeSearchSpy).toHaveBeenCalled();
-    setTypeSearchSpy.mockRestore();
+    userEvent.clear(searchInput);
+    userEvent.click(inputRadioName);
+    userEvent.type(searchInput, 'xablau');
+    userEvent.click(submitSearchBtn);
+    const THREE = 3;
+    await waitFor(() => {
+      expect(global.alert).toBeCalledTimes(THREE);
+    });
+
+    userEvent.clear(searchInput);
+    userEvent.click(inputRadioName);
+    userEvent.type(searchInput, 'Arrabiata');
+    userEvent.click(submitSearchBtn);
+
+    await waitFor(() => {
+      expect(history.location.pathname).toBe('/meals/52771');
+    });
   });
-  it('Verifica se ao clickar no botão submit permanece na rota drink', () => {
-    const setTypeSearchSpy = jest.spyOn(React, 'useState');
+  it('Verifica funcionalidade do componente na rota drinks', async () => {
     const { history } = renderWithRouter(<App />, '/drinks');
 
-    const searchBtn = screen.getByRole('button', { name: /search-top-btn/i });
+    const searchBtn = await screen.findByRole('button', { name: /search-top-btn/i });
     userEvent.click(searchBtn);
-    const inputRadioIngredient = screen.getByTestId(INGREDIENT_RADIO);
 
-    act(() => {
-      userEvent.click(inputRadioIngredient);
-    });
+    const searchInput = await screen.findByTestId('search-input');
+    const inputRadioName = screen.getByTestId('name-search-radio');
+    const submitSearchBtn = screen.getByTestId('exec-search-btn');
 
-    expect(setTypeSearchSpy).toHaveBeenCalled();
-    const submitSearchBtn = screen.getByTestId(SEARCH_BTN_SUBMIT);
+    userEvent.type(searchInput, 'Aquamarine');
+    userEvent.click(inputRadioName);
     userEvent.click(submitSearchBtn);
-    expect(history.location.pathname).toBe('/drinks');
-    setTypeSearchSpy.mockRestore();
+
+    await waitFor(() => {
+      expect(history.location.pathname).toBe('/drinks/178319');
+    });
   });
 });

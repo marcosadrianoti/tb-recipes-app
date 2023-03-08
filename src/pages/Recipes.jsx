@@ -1,18 +1,28 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import RecipeCard from '../components/RecipeCard';
+import RecipesContext from '../context/RecipesContext';
 
 function Recipes({ recipes = [] }) {
+  const { filterRecipes } = useContext(RecipesContext);
+  const RENDER_MAX = 12;
   return (
     <div className="recipes-container">
       <div className="recipes">
-        {recipes.map((recipe, index) => (
+        { filterRecipes.length === 0 ? (recipes.map((recipe, index) => (
           <RecipeCard
             key={ recipe.idMeal || recipe.idDrink }
             recipe={ recipe }
             index={ index }
           />
-        ))}
+        ))) : ((filterRecipes.map((recipe, index) => (
+          index < RENDER_MAX
+          && <RecipeCard
+            key={ recipe.idMeal || recipe.idDrink }
+            recipe={ recipe }
+            index={ index }
+          />
+        )))) }
       </div>
     </div>
   );
