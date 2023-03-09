@@ -6,7 +6,7 @@ import Recipes from './Recipes';
 import CategoryBtn from '../components/CategoryBtn';
 
 function Meals() {
-  const { meals, mealsCategories, setApiURLMeals } = useContext(RecipesContext);
+  const { mealsCategories, setApiURLMeals } = useContext(RecipesContext);
   const count = 5;
   return (
     <>
