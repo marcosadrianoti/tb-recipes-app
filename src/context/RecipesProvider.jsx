@@ -6,6 +6,7 @@ import {
   getDrinks,
   getMealsCategories,
   getDrinksCategories,
+  getDetailsRecipe,
 } from '../services/fetchApi';
 
 function RecipesProvider({ children }) {
@@ -17,9 +18,18 @@ function RecipesProvider({ children }) {
 
   const [apiURLMeals, setApiURLMeals] = useState('https://www.themealdb.com/api/json/v1/1/search.php?s=');
   const [apiURLDrinks, setApiURLDrinks] = useState('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+  const [detailsRecipe, setDetailsRecipe] = useState('');
+  const [filterRecipes, setFilterRecipes] = useState([]);
 
   const handleSearch = (newSearch) => {
     setSearch(newSearch);
+  };
+
+  const fetchDetails = async (clickedRecipe) => {
+    const id = 'idMeal' in clickedRecipe ? clickedRecipe.idMeal : clickedRecipe.idDrink;
+    const typeRecipe = 'idMeal' in clickedRecipe ? 'meals' : 'drinks';
+
+    setDetailsRecipe(await getDetailsRecipe(id, typeRecipe));
   };
 
   const data = useMemo(
@@ -31,12 +41,16 @@ function RecipesProvider({ children }) {
       drinks,
       mealsCategories,
       drinksCategories,
+      filterRecipes,
+      detailsRecipe,
       setApiURLMeals,
+      fetchDetails,
       setApiURLDrinks,
+      setFilterRecipes,
       handleSearch }),
     [meals, drinks, search, mealsCategories,
-      drinksCategories, apiURLMeals, apiURLDrinks],
-  );
+      drinksCategories, apiURLMeals, apiURLDrinks, detailsRecipe, filterRecipes],
+
   useEffect(() => {
     getMeals(apiURLMeals).then((response) => setMeals(response));
     getDrinks(apiURLDrinks).then((response) => setDrinks(response));

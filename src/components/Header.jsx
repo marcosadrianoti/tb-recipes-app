@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
+import SearchBar from './SearchBar';
 
 function urlToTitle(url) {
   if (url !== '/' && !url.includes(':id')) {
@@ -14,7 +15,6 @@ function urlToTitle(url) {
 function Header() {
   const [isHiddenSearchTopBtn, setIsHiddenSearchTopBtn] = useState(false);
   const [isHiddenTextForSearch, setIsHiddenTextForSearch] = useState(false);
-  const [textForSearch, setTextForSearch] = useState('');
   const { pathname } = useLocation();
   const history = useHistory();
 
@@ -53,16 +53,7 @@ function Header() {
       ) }
       { isHiddenTextForSearch && (
         <div className="seach-container">
-          <label htmlFor="input-email">
-            <input
-              data-testid="search-input"
-              type="text"
-              name="search-input"
-              className="search-input"
-              value={ textForSearch }
-              onChange={ ({ target: { value } }) => setTextForSearch(value) }
-            />
-          </label>
+          <SearchBar />
         </div>
       ) }
     </div>

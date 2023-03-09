@@ -8,9 +8,9 @@ function RecipeCard({ recipe = {}, index }) {
     strDrinkThumb = '',
     strMeal = '',
     strDrink = '' } = recipe;
+
   return (
     <Link to={ recipe.idMeal ? `/meals/${recipe.idMeal}` : `/drinks/${recipe.idDrink}` }>
-      {console.log(recipe)}
       <div
         className="recipe-card"
         data-testid={ `${index}-recipe-card` }
@@ -31,7 +31,6 @@ function RecipeCard({ recipe = {}, index }) {
     </Link>
   );
 }
-
 RecipeCard.propTypes = {
   recipe: PropTypes.shape({
     strMealThumb: PropTypes.string,
@@ -41,5 +40,4 @@ RecipeCard.propTypes = {
   }).isRequired,
   index: PropTypes.number.isRequired,
 };
-
 export default RecipeCard;
