@@ -11,7 +11,8 @@ function Recipes({ recipes = [] }) {
     <div className="recipes-container">
       <div className="recipes">
         { filterRecipes.length === 0 ? (recipes.map((recipe, index) => (
-          <RecipeCard
+          index < RENDER_MAX
+          && <RecipeCard
             key={ recipe.idMeal || recipe.idDrink }
             recipe={ recipe }
             index={ index }
