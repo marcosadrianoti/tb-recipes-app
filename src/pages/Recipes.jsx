@@ -6,6 +6,7 @@ import RecipesContext from '../context/RecipesContext';
 function Recipes({ recipes = [] }) {
   const { filterRecipes } = useContext(RecipesContext);
   const RENDER_MAX = 12;
+
   return (
     <div className="recipes-container">
       <div className="recipes">
@@ -34,7 +35,7 @@ Recipes.propTypes = {
     idDrink: PropTypes.string,
     strMeal: PropTypes.string,
     strDrink: PropTypes.string,
-  }).isRequired),
+  })).isRequired,
 };
 
 export default Recipes;

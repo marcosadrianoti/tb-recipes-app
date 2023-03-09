@@ -98,6 +98,38 @@
   width: 100%;
 }
 
+.top-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+}
+
+.categories-buttons-container {
+  display: flex;
+  justify-content: center;
+  margin: 4px auto;
+}
+
+.category-button {
+  align-items: center;
+  background-color: #fcfcfc;
+  border-radius: 4px;
+  color: #36395a;
+  cursor: pointer;
+  font-weight: 150;
+  justify-content: center;
+  list-style: none;
+}
+
+.remove-filter-btn {
+  background-color: black;
+  border-radius: 20px;
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+}
+
 @keyframes shake {
 
   0% {

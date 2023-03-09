@@ -1,12 +1,23 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import RecipesContext from './RecipesContext';
-import { getMeals, getDrinks, getDetailsRecipe } from '../services/fetchApi';
+import {
+  getMeals,
+  getDrinks,
+  getMealsCategories,
+  getDrinksCategories,
+  getDetailsRecipe,
+} from '../services/fetchApi';
 
 function RecipesProvider({ children }) {
   const [meals, setMeals] = useState([]);
   const [drinks, setDrinks] = useState([]);
   const [search, setSearch] = useState('');
+  const [mealsCategories, setMealsCategories] = useState([]);
+  const [drinksCategories, setDrinksCategories] = useState([]);
+
+  const [apiURLMeals, setApiURLMeals] = useState('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+  const [apiURLDrinks, setApiURLDrinks] = useState('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
   const [detailsRecipe, setDetailsRecipe] = useState('');
   const [filterRecipes, setFilterRecipes] = useState([]);
 
@@ -21,23 +32,29 @@ function RecipesProvider({ children }) {
     setDetailsRecipe(await getDetailsRecipe(id, typeRecipe));
   };
 
-  const data = useMemo(
-    () => ({ search,
-      filterRecipes,
-      meals,
-      drinks,
-      detailsRecipe,
-      handleSearch,
-      fetchDetails,
-      setFilterRecipes,
-    }),
-    [meals, drinks, detailsRecipe, search, filterRecipes],
-  );
+  const data = useMemo(() => ({
+    apiURLMeals,
+    apiURLDrinks,
+    search,
+    meals,
+    drinks,
+    mealsCategories,
+    drinksCategories,
+    filterRecipes,
+    detailsRecipe,
+    setApiURLMeals,
+    fetchDetails,
+    setApiURLDrinks,
+    setFilterRecipes,
+    handleSearch }), [meals, drinks, search, mealsCategories,
+    drinksCategories, apiURLMeals, apiURLDrinks, detailsRecipe, filterRecipes]);
 
   useEffect(() => {
-    getMeals(search).then((response) => setMeals(response));
-    getDrinks(search).then((response) => setDrinks(response));
-  }, [search]);
+    getMeals(apiURLMeals).then((response) => setMeals(response));
+    getDrinks(apiURLDrinks).then((response) => setDrinks(response));
+    getMealsCategories().then((response) => setMealsCategories(response));
+    getDrinksCategories().then((response) => setDrinksCategories(response));
+  }, [apiURLMeals, apiURLDrinks]);
 
   return (
     <RecipesContext.Provider value={ data }>
