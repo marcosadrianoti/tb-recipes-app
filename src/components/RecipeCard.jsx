@@ -1,43 +1,36 @@
-import React, { useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+import React from 'react';
 import PropTypes from 'prop-types';
-import RecipesContext from '../context/RecipesContext';
+import { Link } from 'react-router-dom';
 
 function RecipeCard({ recipe = {}, index }) {
-  const { fetchDetails } = useContext(RecipesContext);
-  const history = useHistory();
-
   const {
-    idMeal,
-    idDrink,
     strMealThumb = '',
     strDrinkThumb = '',
     strMeal = '',
     strDrink = '' } = recipe;
 
-  const goDetailsRecipe = async () => {
-    await fetchDetails(recipe);
-
-    if (idMeal) history.push(`/meals/${idMeal}`);
-    if (idDrink) history.push(`/drinks/${idDrink}`);
-  };
-
   return (
-    <button
-      onClick={ () => goDetailsRecipe() }
-      className="recipe-card"
-      data-testid={ `${index}-recipe-card` }
-    >
-      <img
-        src={ strMealThumb || strDrinkThumb }
-        alt={ `imagem da receita ${strMeal || strDrink}` }
-        data-testid={ `${index}-card-img` }
-      />
-      <span data-testid={ `${index}-card-name` }>{ strMeal || strDrink }</span>
-    </button>
+    <Link to={ recipe.idMeal ? `/meals/${recipe.idMeal}` : `/drinks/${recipe.idDrink}` }>
+      <div
+        className="recipe-card"
+        data-testid={ `${index}-recipe-card` }
+      >
+        <img
+          src={ strMealThumb || strDrinkThumb }
+          alt={ `imagem da receita ${strMeal || strDrink}` }
+          data-testid={ `${index}-card-img` }
+          className="recipe-image"
+        />
+        <span
+          data-testid={ `${index}-card-name` }
+          className="recipe-name"
+        >
+          { strMeal || strDrink }
+        </span>
+      </div>
+    </Link>
   );
 }
-
 RecipeCard.propTypes = {
   recipe: PropTypes.shape({
     strMealThumb: PropTypes.string,
@@ -47,5 +40,4 @@ RecipeCard.propTypes = {
   }).isRequired,
   index: PropTypes.number.isRequired,
 };
-
 export default RecipeCard;

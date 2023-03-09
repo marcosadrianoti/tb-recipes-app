@@ -8,6 +8,7 @@ function RecipesProvider({ children }) {
   const [drinks, setDrinks] = useState([]);
   const [search, setSearch] = useState('');
   const [detailsRecipe, setDetailsRecipe] = useState('');
+  const [filterRecipes, setFilterRecipes] = useState([]);
 
   const handleSearch = (newSearch) => {
     setSearch(newSearch);
@@ -22,13 +23,17 @@ function RecipesProvider({ children }) {
 
   const data = useMemo(
     () => ({ search,
+      filterRecipes,
       meals,
       drinks,
       detailsRecipe,
       handleSearch,
-      fetchDetails }),
-    [meals, drinks, detailsRecipe, search],
+      fetchDetails,
+      setFilterRecipes,
+    }),
+    [meals, drinks, detailsRecipe, search, filterRecipes],
   );
+
   useEffect(() => {
     getMeals(search).then((response) => setMeals(response));
     getDrinks(search).then((response) => setDrinks(response));

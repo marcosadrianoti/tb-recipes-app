@@ -1,14 +1,12 @@
 import React from 'react';
-import { screen, render, fireEvent } from '@testing-library/react';
+import { screen, fireEvent } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
-import { Router } from 'react-router-dom';
-import { createMemoryHistory } from 'history';
 import App from '../App';
-import Login from '../pages/Login';
+import renderWithRouter from '../helpers/renderWithRouter';
 
 describe('Teste do componente Login', () => {
   it('Teste se a página renderiza os inputs e buttons', () => {
-    render(<Login />);
+    renderWithRouter(<App />, '/');
     const emailInput = screen.getByTestId('email-input');
     const passwordInput = screen.getByTestId('password-input');
     const submitButton = screen.getByRole('button', { name: /entrar/i });
@@ -18,12 +16,7 @@ describe('Teste do componente Login', () => {
     expect(submitButton).toBeInTheDocument();
   });
   it('valida o formulário corretamente', () => {
-    const history = createMemoryHistory();
-    render(
-      <Router history={ history }>
-        <App />
-      </Router>,
-    );
+    const { history } = renderWithRouter(<App />, '/');
     const emailInput = screen.getByTestId('email-input');
     const passwordInput = screen.getByTestId('password-input');
     const submitButton = screen.getByRole('button', { name: /entrar/i });
