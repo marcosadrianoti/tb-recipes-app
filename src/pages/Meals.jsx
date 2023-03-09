@@ -29,7 +29,7 @@ function Meals() {
         </button>
       </div>
       <Header />
-      <Recipes recipes={ meals } />
+      <Recipes />
       <Footer />
     </>
   );

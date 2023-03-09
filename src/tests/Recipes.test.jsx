@@ -39,9 +39,12 @@ describe('Teste do componente Recipes.js', () => {
     const emailInput = screen.getByTestId('email-input');
     const passwordInput = screen.getByTestId('password-input');
     const buttonInput = screen.getByTestId('login-submit-btn');
-    userEvent.type(emailInput, 'teste@trybe.com');
-    userEvent.type(passwordInput, '12345678');
-    userEvent.click(buttonInput);
+
+    act(() => {
+      userEvent.type(emailInput, 'teste@trybe.com');
+      userEvent.type(passwordInput, '12345678');
+      userEvent.click(buttonInput);
+    });
 
     // Página Meals.jsx
     expect(history.location.pathname).toBe('/meals');
@@ -69,9 +72,12 @@ describe('Teste do componente Recipes.js', () => {
     const emailInput = screen.getByTestId('email-input');
     const passwordInput = screen.getByTestId('password-input');
     const buttonInput = screen.getByTestId('login-submit-btn');
-    userEvent.type(emailInput, 'teste@trybe.com');
-    userEvent.type(passwordInput, '12345678');
-    userEvent.click(buttonInput);
+
+    act(() => {
+      userEvent.type(emailInput, 'teste@trybe.com');
+      userEvent.type(passwordInput, '12345678');
+      userEvent.click(buttonInput);
+    });
 
     // Página Meals.jsx
     expect(history.location.pathname).toBe('/meals');

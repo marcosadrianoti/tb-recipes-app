@@ -1,11 +1,15 @@
 import React, { useContext } from 'react';
-import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 import RecipeCard from '../components/RecipeCard';
 import RecipesContext from '../context/RecipesContext';
 
-function Recipes({ recipes = [] }) {
-  const { filterRecipes } = useContext(RecipesContext);
+function Recipes() {
+  const { filterRecipes, meals, drinks } = useContext(RecipesContext);
   const RENDER_MAX = 12;
+
+  const history = useHistory();
+
+  const recipes = history.location.pathname === '/meals' ? meals : drinks;
 
   return (
     <div className="recipes-container">
@@ -29,14 +33,5 @@ function Recipes({ recipes = [] }) {
     </div>
   );
 }
-
-Recipes.propTypes = {
-  recipes: PropTypes.arrayOf(PropTypes.shape({
-    idMeal: PropTypes.string,
-    idDrink: PropTypes.string,
-    strMeal: PropTypes.string,
-    strDrink: PropTypes.string,
-  })).isRequired,
-};
 
 export default Recipes;
