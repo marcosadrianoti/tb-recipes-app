@@ -2,9 +2,9 @@ import { useState, useCallback, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
 
 function Login() {
-  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isDisabled, setIsDisable] = useState(true);
+  const [email, setEmail] = useState('');
 
   const history = useHistory();
 
@@ -17,6 +17,12 @@ function Login() {
     if (emailValid && password.length > minimalCharacters) setIsDisable(false);
     else setIsDisable(true);
   }, [password, email]);
+
+  const handleClick = () => {
+    const user = { email };
+    localStorage.setItem('user', JSON.stringify(user));
+    history.push('/meals');
+  };
 
   useMemo(() => {
     validForm();
@@ -54,9 +60,7 @@ function Login() {
         name="enter-button"
         className="enter-button"
         onClick={ () => {
-          const user = { email };
-          localStorage.setItem('user', JSON.stringify(user));
-          history.push('/meals');
+          handleClick();
         } }
         disabled={ isDisabled }
       >
