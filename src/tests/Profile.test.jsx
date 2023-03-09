@@ -1,5 +1,6 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
+import { act } from 'react-dom/test-utils';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
 import renderWithRouter from '../helpers/renderWithRouter';
@@ -71,7 +72,9 @@ describe('Testes do componente Profile', () => {
     const doneRecipesBtn = await screen.findByTestId('profile-done-btn');
     expect(doneRecipesBtn).toBeInTheDocument();
 
-    userEvent.click(doneRecipesBtn);
+    act(() => {
+      userEvent.click(doneRecipesBtn);
+    });
 
     const { pathname } = history.location;
     expect(pathname).toBe('/done-recipes');
@@ -87,7 +90,9 @@ describe('Testes do componente Profile', () => {
     const favoriteRecipesBtn = await screen.findByTestId('profile-favorite-btn');
     expect(favoriteRecipesBtn).toBeInTheDocument();
 
-    userEvent.click(favoriteRecipesBtn);
+    act(() => {
+      userEvent.click(favoriteRecipesBtn);
+    });
 
     const { pathname } = history.location;
     expect(pathname).toBe('/favorite-recipes');
@@ -105,7 +110,9 @@ describe('Testes do componente Profile', () => {
 
     localStorage.clear();
 
-    userEvent.click(logoutBtn);
+    act(() => {
+      userEvent.click(logoutBtn);
+    });
 
     const { pathname } = history.location;
     expect(pathname).toBe('/');
