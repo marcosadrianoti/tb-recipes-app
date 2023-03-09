@@ -32,24 +32,22 @@ function RecipesProvider({ children }) {
     setDetailsRecipe(await getDetailsRecipe(id, typeRecipe));
   };
 
-  const data = useMemo(
-    () => ({
-      apiURLMeals,
-      apiURLDrinks,
-      search,
-      meals,
-      drinks,
-      mealsCategories,
-      drinksCategories,
-      filterRecipes,
-      detailsRecipe,
-      setApiURLMeals,
-      fetchDetails,
-      setApiURLDrinks,
-      setFilterRecipes,
-      handleSearch }),
-    [meals, drinks, search, mealsCategories,
-      drinksCategories, apiURLMeals, apiURLDrinks, detailsRecipe, filterRecipes],
+  const data = useMemo(() => ({
+    apiURLMeals,
+    apiURLDrinks,
+    search,
+    meals,
+    drinks,
+    mealsCategories,
+    drinksCategories,
+    filterRecipes,
+    detailsRecipe,
+    setApiURLMeals,
+    fetchDetails,
+    setApiURLDrinks,
+    setFilterRecipes,
+    handleSearch }), [meals, drinks, search, mealsCategories,
+    drinksCategories, apiURLMeals, apiURLDrinks, detailsRecipe, filterRecipes]);
 
   useEffect(() => {
     getMeals(apiURLMeals).then((response) => setMeals(response));

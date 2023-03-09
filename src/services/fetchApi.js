@@ -1,7 +1,5 @@
 const MEALS_CATEGORIES_URL = 'https://www.themealdb.com/api/json/v1/1/list.php?c=list';
 const DRINKS_CATEGORIES_URL = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list';
-const MEALS_URL = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
-const DRINKS_URL = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
 const DETAILS_MEAL_URL = 'https://www.themealdb.com/api/json/v1/1/lookup.php?i=';
 const DETAILS_DRINKS_URL = 'https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=';
 const INGREDIENT_MEALS_URL_FILTER = 'https://www.themealdb.com/api/json/v1/1/filter.php?i=';
