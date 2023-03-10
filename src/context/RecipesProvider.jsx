@@ -6,7 +6,6 @@ import {
   getDrinks,
   getMealsCategories,
   getDrinksCategories,
-  getDetailsRecipe,
 } from '../services/fetchApi';
 
 function RecipesProvider({ children }) {
@@ -18,18 +17,11 @@ function RecipesProvider({ children }) {
 
   const [apiURLMeals, setApiURLMeals] = useState('https://www.themealdb.com/api/json/v1/1/search.php?s=');
   const [apiURLDrinks, setApiURLDrinks] = useState('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
-  const [detailsRecipe, setDetailsRecipe] = useState('');
+  const [detailsRecipe, setDetailsRecipe] = useState([]);
   const [filterRecipes, setFilterRecipes] = useState([]);
 
   const handleSearch = (newSearch) => {
     setSearch(newSearch);
-  };
-
-  const fetchDetails = async (clickedRecipe) => {
-    const id = 'idMeal' in clickedRecipe ? clickedRecipe.idMeal : clickedRecipe.idDrink;
-    const typeRecipe = 'idMeal' in clickedRecipe ? 'meals' : 'drinks';
-
-    setDetailsRecipe(await getDetailsRecipe(id, typeRecipe));
   };
 
   const data = useMemo(() => ({
@@ -43,7 +35,7 @@ function RecipesProvider({ children }) {
     filterRecipes,
     detailsRecipe,
     setApiURLMeals,
-    fetchDetails,
+    setDetailsRecipe,
     setApiURLDrinks,
     setFilterRecipes,
     handleSearch }), [meals, drinks, search, mealsCategories,
