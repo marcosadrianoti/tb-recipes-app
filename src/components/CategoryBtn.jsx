@@ -28,7 +28,7 @@ function CategoryBtn({ strCategory, drinkOrMeal }) {
     <button
       type="button"
       data-testid={ `${strCategory}-category-filter` }
-      className="category-button"
+      className="category-button sucess"
       onClick={ handleClick }
     >
       {strCategory}

@@ -2,6 +2,7 @@ import React, { useCallback, useContext, useEffect, useMemo, useState } from 're
 import { useLocation, useParams } from 'react-router-dom';
 import { fetchDetailsRecipe } from '../services/fetchApi';
 import RecipesContext from '../context/RecipesContext';
+import RecomendedRecipes from '../components/RecomendedRecipes';
 
 function RecipeDetails() {
   const { pathname } = useLocation();
@@ -16,8 +17,6 @@ function RecipeDetails() {
     const response = await fetchDetailsRecipe(id, typeRecipe);
     setDetailsRecipe(response);
   }, [id, pathname, setDetailsRecipe]);
-
-  console.log(detailsRecipe);
 
   useMemo(() => {
     if (detailsRecipe[0]) {
@@ -69,6 +68,7 @@ function RecipeDetails() {
             .replace('youtube', 'youtube-nocookie') }
         />
       )}
+      <RecomendedRecipes />
     </div>
   );
 }
