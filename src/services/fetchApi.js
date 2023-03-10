@@ -33,12 +33,12 @@ const getDrinksCategories = async () => {
   return data.drinks;
 };
 
-const getDetailsRecipe = async (id, typeRecipe) => {
+const fetchDetailsRecipe = async (id, typeRecipe) => {
   const response = await fetch(`${typeRecipe === 'meals'
     ? DETAILS_MEAL_URL
     : DETAILS_DRINKS_URL}${id}`);
   const data = await response.json();
-  return data[typeRecipe][0];
+  return data[typeRecipe];
 };
 
 const fetchFilter = async (url, textForSearch, type) => {
@@ -70,7 +70,7 @@ const fetchFilterForType = (isType, typeSearch, text) => {
 export {
   getMeals,
   getDrinks,
-  getDetailsRecipe,
+  fetchDetailsRecipe,
   fetchFilterForType,
   getMealsCategories,
   getDrinksCategories,
