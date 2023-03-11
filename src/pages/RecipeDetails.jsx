@@ -5,14 +5,15 @@ import RecipesContext from '../context/RecipesContext';
 import RecomendedRecipes from '../components/RecomendedRecipes';
 
 function RecipeDetails() {
-  const history = useHistory();
-  const { pathname } = useLocation();
-  const { id } = useParams();
   const { setDetailsRecipe, detailsRecipe } = useContext(RecipesContext);
-
   const [arrayIngredients, setArrayIngredients] = useState([]);
   const [arrayMeasures, setArrayMeasures] = useState([]);
   const [isDoneRecipe, setIsDoneRecipe] = useState(false);
+  const [isInProgressRecipes, setIsInProgressRecipes] = useState(false);
+
+  const history = useHistory();
+  const { pathname } = useLocation();
+  const { id } = useParams();
 
   const fetchDetails = useCallback(async () => {
     const typeRecipe = pathname.includes('drinks') ? 'drinks' : 'meals';
@@ -21,15 +22,25 @@ function RecipeDetails() {
   }, [id, pathname, setDetailsRecipe]);
 
   const doneRecipe = useCallback(() => {
-    const teste = localStorage.getItem('doneRecipes');
-    if (teste) {
-      const arr = JSON.parse(teste);
-      arr.forEach((recipe) => {
+    const getDoneRecipes = localStorage.getItem('doneRecipes');
+    if (getDoneRecipes) {
+      const arrDoneRecipes = JSON.parse(getDoneRecipes);
+      arrDoneRecipes.forEach((recipe) => {
         const isDone = recipe.id === id;
         setIsDoneRecipe(isDone);
       });
     }
   }, [id]);
+
+  const progressRecipes = useCallback(() => {
+    const typeRecipe = pathname.includes('drinks') ? 'drinks' : 'meals';
+    const getInProgressRecipes = localStorage.getItem('inProgressRecipes');
+    if (getInProgressRecipes) {
+      const objInProgressRecipes = JSON.parse(getInProgressRecipes);
+      const isInProgress = Object.keys(objInProgressRecipes[typeRecipe]).includes(id);
+      setIsInProgressRecipes(isInProgress);
+    }
+  }, [id, pathname]);
 
   useMemo(() => {
     if (detailsRecipe[0]) {
@@ -45,8 +56,9 @@ function RecipeDetails() {
 
   useEffect(() => {
     fetchDetails();
+    progressRecipes();
     doneRecipe();
-  }, [fetchDetails, doneRecipe]);
+  }, [fetchDetails, progressRecipes, doneRecipe]);
 
   return (
     <div>
@@ -83,6 +95,25 @@ function RecipeDetails() {
         />
       )}
       <RecomendedRecipes />
+
+      <button
+        data-testid="share-btn"
+        type="button"
+        className="sucess"
+        // onClick={ () => history.push(`${pathname}/in-progress`) }
+      >
+        Share
+      </button>
+
+      <button
+        data-testid="favorite-btn"
+        type="button"
+        className="sucess"
+        // onClick={ () => history.push(`${pathname}/in-progress`) }
+      >
+        Favorite
+      </button>
+
       { isDoneRecipe || (
         <button
           data-testid="start-recipe-btn"
@@ -90,7 +121,7 @@ function RecipeDetails() {
           className="sucess w-50 button-start-recipe"
           onClick={ () => history.push(`${pathname}/in-progress`) }
         >
-          Start Recipe
+          {isInProgressRecipes ? 'Continue Recipe' : 'Start Recipe'}
         </button>)}
     </div>
   );
