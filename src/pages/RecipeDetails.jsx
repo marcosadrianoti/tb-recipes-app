@@ -1,22 +1,35 @@
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { fetchDetailsRecipe } from '../services/fetchApi';
 import RecipesContext from '../context/RecipesContext';
 import RecomendedRecipes from '../components/RecomendedRecipes';
 
 function RecipeDetails() {
+  const history = useHistory();
   const { pathname } = useLocation();
   const { id } = useParams();
   const { setDetailsRecipe, detailsRecipe } = useContext(RecipesContext);
 
   const [arrayIngredients, setArrayIngredients] = useState([]);
   const [arrayMeasures, setArrayMeasures] = useState([]);
+  const [isDoneRecipe, setIsDoneRecipe] = useState(false);
 
   const fetchDetails = useCallback(async () => {
     const typeRecipe = pathname.includes('drinks') ? 'drinks' : 'meals';
     const response = await fetchDetailsRecipe(id, typeRecipe);
     setDetailsRecipe(response);
   }, [id, pathname, setDetailsRecipe]);
+
+  const doneRecipe = useCallback(() => {
+    const teste = localStorage.getItem('doneRecipes');
+    if (teste) {
+      const arr = JSON.parse(teste);
+      arr.forEach((recipe) => {
+        const isDone = recipe.id === id;
+        setIsDoneRecipe(isDone);
+      });
+    }
+  }, [id]);
 
   useMemo(() => {
     if (detailsRecipe[0]) {
@@ -32,7 +45,8 @@ function RecipeDetails() {
 
   useEffect(() => {
     fetchDetails();
-  }, [fetchDetails]);
+    doneRecipe();
+  }, [fetchDetails, doneRecipe]);
 
   return (
     <div>
@@ -69,6 +83,15 @@ function RecipeDetails() {
         />
       )}
       <RecomendedRecipes />
+      { isDoneRecipe || (
+        <button
+          data-testid="start-recipe-btn"
+          type="button"
+          className="sucess w-50 button-start-recipe"
+          onClick={ () => history.push(`${pathname}/in-progress`) }
+        >
+          Start Recipe
+        </button>)}
     </div>
   );
 }
