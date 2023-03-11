@@ -3,6 +3,11 @@ import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { fetchDetailsRecipe } from '../services/fetchApi';
 import RecipesContext from '../context/RecipesContext';
 import RecomendedRecipes from '../components/RecomendedRecipes';
+import shareIcon from '../images/shareIcon.svg';
+// import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+// import blackHeartIcon from '../images/blackHeartIcon.svg';
+
+const copy = require('clipboard-copy');
 
 function RecipeDetails() {
   const { setDetailsRecipe, detailsRecipe } = useContext(RecipesContext);
@@ -10,6 +15,7 @@ function RecipeDetails() {
   const [arrayMeasures, setArrayMeasures] = useState([]);
   const [isDoneRecipe, setIsDoneRecipe] = useState(false);
   const [isInProgressRecipes, setIsInProgressRecipes] = useState(false);
+  const [isCopiedLink, setIsCopiedLink] = useState(false);
 
   const history = useHistory();
   const { pathname } = useLocation();
@@ -42,6 +48,12 @@ function RecipeDetails() {
     }
   }, [id, pathname]);
 
+  const copyLink = useCallback(() => {
+    const link = `http://localhost:3000${pathname}`;
+    copy(link);
+    setIsCopiedLink(true);
+  }, [pathname]);
+
   useMemo(() => {
     if (detailsRecipe[0]) {
       const arr = Object.keys(detailsRecipe[0]);
@@ -62,6 +74,31 @@ function RecipeDetails() {
 
   return (
     <div>
+      {
+        isCopiedLink && (
+          <h2>Link copied!</h2>
+        )
+      }
+      <button
+        data-testid="share-btn"
+        type="button"
+        className="sucess"
+        onClick={ () => copyLink() }
+      >
+        <img
+          src={ shareIcon }
+          alt="Share-icon"
+        />
+      </button>
+
+      <button
+        data-testid="favorite-btn"
+        type="button"
+        className="sucess"
+        // onClick={ () => history.push(`${pathname}/in-progress`) }
+      >
+        Favorite
+      </button>
       <img
         data-testid="recipe-photo"
         src={ detailsRecipe[0]?.strMealThumb || detailsRecipe[0]?.strDrinkThumb }
@@ -95,24 +132,6 @@ function RecipeDetails() {
         />
       )}
       <RecomendedRecipes />
-
-      <button
-        data-testid="share-btn"
-        type="button"
-        className="sucess"
-        // onClick={ () => history.push(`${pathname}/in-progress`) }
-      >
-        Share
-      </button>
-
-      <button
-        data-testid="favorite-btn"
-        type="button"
-        className="sucess"
-        // onClick={ () => history.push(`${pathname}/in-progress`) }
-      >
-        Favorite
-      </button>
 
       { isDoneRecipe || (
         <button
