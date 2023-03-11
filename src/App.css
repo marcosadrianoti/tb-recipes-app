@@ -130,6 +130,14 @@
   font-weight: 600;
 }
 
+.ingredients-list {
+  list-style-type: none;
+}
+
+.ingredient-item {
+  text-decoration: line-through solid rgb(0, 0, 0);
+}
+
 @keyframes shake {
 
   0% {

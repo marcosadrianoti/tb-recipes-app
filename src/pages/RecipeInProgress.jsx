@@ -2,6 +2,7 @@ import { useCallback, useContext, useEffect } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
 import { fetchDetailsRecipe } from '../services/fetchApi';
+import '../App.css';
 
 function RecipeInProgress() {
   const { detailsRecipe, setDetailsRecipe } = useContext(RecipesContext);
@@ -24,6 +25,12 @@ function RecipeInProgress() {
   useEffect(() => {
     fetchDetails();
   }, [fetchDetails]);
+
+  const handleCheck = ({ target: { checked, name } }) => {
+    const spanText = document.getElementById(`${name}`);
+    if (checked) spanText.className = 'ingredient-item';
+    else spanText.className = '';
+  };
 
   return (
     <div>
@@ -54,16 +61,23 @@ function RecipeInProgress() {
 
             <div data-testid="instructions">
               <h3>Lista de ingredientes</h3>
-              <ul style={ { listStyleType: 'none' } }>
+              <ul className="ingredients-list">
                 {ingredients
                   .filter((ingredient) => detailsRecipe[0][ingredient] !== null)
                   .map((ingredient, index) => (
                     <li key={ index }>
                       <label
-                        htmlFor="ingredient"
+                        htmlFor={ `ingredient${index}` }
+                        id={ index }
+                        className=""
                         data-testid={ `${index}-ingredient-step` }
                       >
-                        <input type="checkbox" id="ingredient" />
+                        <input
+                          type="checkbox"
+                          id={ `ingredient${index}` }
+                          name={ index }
+                          onChange={ handleCheck }
+                        />
                         {` ${detailsRecipe[0][ingredient]}
                         - ${detailsRecipe[0][quantities[index]]}`}
                       </label>
