@@ -8,12 +8,12 @@ function RecipeInProgress() {
   const { pathname } = useLocation();
   const { id } = useParams();
 
-  const ingredientes = detailsRecipe[0] && Object.keys(detailsRecipe[0])
-    .filter((elemento) => elemento.includes('strIngredient'))
-    .filter((elemento) => detailsRecipe[0][elemento] !== '');
+  const ingredients = detailsRecipe[0] && Object.keys(detailsRecipe[0])
+    .filter((element) => element.includes('strIngredient'))
+    .filter((element) => detailsRecipe[0][element] !== '');
 
-  const quantidades = detailsRecipe[0] && Object.keys(detailsRecipe[0])
-    .filter((elemento) => elemento.includes('strMeasure'));
+  const quantities = detailsRecipe[0] && Object.keys(detailsRecipe[0])
+    .filter((element) => element.includes('strMeasure'));
 
   const fetchDetails = useCallback(async () => {
     const typeRecipe = pathname.includes('drinks') ? 'drinks' : 'meals';
@@ -54,13 +54,19 @@ function RecipeInProgress() {
 
             <div data-testid="instructions">
               <h3>Lista de ingredientes</h3>
-              <ul>
-                {ingredientes
-                  .filter((ingrediente) => detailsRecipe[0][ingrediente] !== null)
-                  .map((ingrediente, index) => (
+              <ul style={ { listStyleType: 'none' } }>
+                {ingredients
+                  .filter((ingredient) => detailsRecipe[0][ingredient] !== null)
+                  .map((ingredient, index) => (
                     <li key={ index }>
-                      {`${detailsRecipe[0][ingrediente]}
-                       - ${detailsRecipe[0][quantidades[index]]}`}
+                      <label
+                        htmlFor="ingredient"
+                        data-testid={ `${index}-ingredient-step` }
+                      >
+                        <input type="checkbox" id="ingredient" />
+                        {` ${detailsRecipe[0][ingredient]}
+                        - ${detailsRecipe[0][quantities[index]]}`}
+                      </label>
                     </li>
                   ))}
               </ul>
