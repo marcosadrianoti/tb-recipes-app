@@ -8,18 +8,6 @@ function Login() {
 
   const history = useHistory();
 
-  // const doneRecipes = [{
-  //   id: '',
-  //   type: '',
-  //   nationality: '',
-  //   category: '',
-  //   alcoholicOrNot: '',
-  //   name: '',
-  //   image: '',
-  //   doneDate: '',
-  //   tags: '',
-  // }];
-
   const validForm = useCallback(() => {
     // Verifica se o e-mail é válido
     const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -34,6 +22,7 @@ function Login() {
     const user = { email };
     localStorage.setItem('user', JSON.stringify(user));
     localStorage.setItem('doneRecipes', JSON.stringify([]));
+    localStorage.setItem('inProgressRecipes', JSON.stringify({}));
     history.push('/meals');
   };
 
