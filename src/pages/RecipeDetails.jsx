@@ -1,10 +1,11 @@
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { fetchDetailsRecipe } from '../services/fetchApi';
 import RecipesContext from '../context/RecipesContext';
 import RecomendedRecipes from '../components/RecomendedRecipes';
 
 function RecipeDetails() {
+  const history = useHistory();
   const { pathname } = useLocation();
   const { id } = useParams();
   const { setDetailsRecipe, detailsRecipe } = useContext(RecipesContext);
@@ -69,6 +70,14 @@ function RecipeDetails() {
         />
       )}
       <RecomendedRecipes />
+      <button
+        data-testid="start-recipe-btn"
+        type="button"
+        className="sucess w-50 button-start-recipe"
+        onClick={ () => history.push(`${pathname}/in-progress`) }
+      >
+        Start Recipe
+      </button>
     </div>
   );
 }
