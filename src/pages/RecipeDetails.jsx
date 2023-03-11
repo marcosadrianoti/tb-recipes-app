@@ -95,6 +95,25 @@ function RecipeDetails() {
         />
       )}
       <RecomendedRecipes />
+
+      <button
+        data-testid="share-btn"
+        type="button"
+        className="sucess"
+        // onClick={ () => history.push(`${pathname}/in-progress`) }
+      >
+        Share
+      </button>
+
+      <button
+        data-testid="favorite-btn"
+        type="button"
+        className="sucess"
+        // onClick={ () => history.push(`${pathname}/in-progress`) }
+      >
+        Favorite
+      </button>
+
       { isDoneRecipe || (
         <button
           data-testid="start-recipe-btn"
