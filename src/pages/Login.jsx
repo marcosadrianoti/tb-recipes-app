@@ -8,17 +8,17 @@ function Login() {
 
   const history = useHistory();
 
-  const doneRecipes = [{
-    id: '',
-    type: '',
-    nationality: '',
-    category: '',
-    alcoholicOrNot: '',
-    name: '',
-    image: '',
-    doneDate: '',
-    tags: '',
-  }];
+  // const doneRecipes = [{
+  //   id: '',
+  //   type: '',
+  //   nationality: '',
+  //   category: '',
+  //   alcoholicOrNot: '',
+  //   name: '',
+  //   image: '',
+  //   doneDate: '',
+  //   tags: '',
+  // }];
 
   const validForm = useCallback(() => {
     // Verifica se o e-mail é válido
@@ -33,7 +33,7 @@ function Login() {
   const handleClick = () => {
     const user = { email };
     localStorage.setItem('user', JSON.stringify(user));
-    localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
+    localStorage.setItem('doneRecipes', JSON.stringify([]));
     history.push('/meals');
   };
 
