@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { Carousel } from 'react-bootstrap';
 import RecipesContext from '../context/RecipesContext';
 import '../RecomendedRecipes.css';
@@ -9,6 +9,7 @@ const MAX_RECIPES = 6;
 function RecomendedRecipes() {
   const { meals, drinks } = useContext(RecipesContext);
   const { pathname } = useLocation();
+  const history = useHistory();
 
   const isMealOrDrink = pathname.includes('meals') ? drinks : meals;
 
@@ -66,6 +67,7 @@ function RecomendedRecipes() {
         data-testid="start-recipe-btn"
         type="button"
         className="sucess w-50 button-start-recipe"
+        onClick={ () => history.push(`${pathname}/in-progress`) }
       >
         Start Recipe
       </button>
