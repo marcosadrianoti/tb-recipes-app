@@ -4,8 +4,8 @@ import { fetchDetailsRecipe } from '../services/fetchApi';
 import RecipesContext from '../context/RecipesContext';
 import RecomendedRecipes from '../components/RecomendedRecipes';
 import shareIcon from '../images/shareIcon.svg';
-// import whiteHeartIcon from '../images/whiteHeartIcon.svg';
-// import blackHeartIcon from '../images/blackHeartIcon.svg';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 const copy = require('clipboard-copy');
 
@@ -16,6 +16,7 @@ function RecipeDetails() {
   const [isDoneRecipe, setIsDoneRecipe] = useState(false);
   const [isInProgressRecipes, setIsInProgressRecipes] = useState(false);
   const [isCopiedLink, setIsCopiedLink] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
 
   const history = useHistory();
   const { pathname } = useLocation();
@@ -79,6 +80,17 @@ function RecipeDetails() {
     }
   }, [detailsRecipe, pathname, id]);
 
+  const isFavoriteRecipe = useCallback(() => {
+    const getfavoriteRecipes = localStorage.getItem('favoriteRecipes');
+    if (getfavoriteRecipes) {
+      const arrFavoriteRecipes = JSON.parse(getfavoriteRecipes);
+      if (arrFavoriteRecipes.length !== 0) {
+        const recipeFound = !!arrFavoriteRecipes.find((recipe) => recipe.id === id);
+        setIsFavorite(recipeFound);
+      }
+    }
+  }, [id]);
+
   useMemo(() => {
     if (detailsRecipe[0]) {
       const arr = Object.keys(detailsRecipe[0]);
@@ -95,7 +107,8 @@ function RecipeDetails() {
     fetchDetails();
     progressRecipes();
     doneRecipe();
-  }, [fetchDetails, progressRecipes, doneRecipe]);
+    isFavoriteRecipe();
+  }, [fetchDetails, progressRecipes, doneRecipe, isFavoriteRecipe]);
 
   return (
     <div>
@@ -121,9 +134,14 @@ function RecipeDetails() {
         type="button"
         className="sucess"
         onClick={ () => setFavoriteInLocalStorage() }
+        src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
       >
-        Favorite
+        <img
+          src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
+          alt="Favorite-Icon"
+        />
       </button>
+
       <img
         data-testid="recipe-photo"
         src={ detailsRecipe[0]?.strMealThumb || detailsRecipe[0]?.strDrinkThumb }
