@@ -22,14 +22,65 @@ function RecipeInProgress() {
     setDetailsRecipe(response);
   }, [id, pathname, setDetailsRecipe]);
 
+  const startTheCheckboxes = useCallback(() => {
+    const allCheckbox = document.querySelectorAll('input');
+    const typeRecipe = pathname.includes('drinks') ? 'drinks' : 'meals';
+    const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    console.log(allCheckbox);
+
+    allCheckbox.forEach((checkbox) => {
+      if (inProgressRecipes[typeRecipe][id]
+        && inProgressRecipes[typeRecipe][id].includes(checkbox.name)) {
+        checkbox.checked = true;
+      }
+    });
+  }, [id, pathname]);
+
+  startTheCheckboxes();
+
+  const checkLocalStorage = useCallback(() => {
+    if (!localStorage.getItem('inProgressRecipes')) {
+      localStorage
+        .setItem('inProgressRecipes', JSON.stringify({ drinks: {}, meals: {} }));
+    }
+  }, []);
+
   useEffect(() => {
     fetchDetails();
-  }, [fetchDetails]);
+    checkLocalStorage();
+  }, [fetchDetails, checkLocalStorage]);
 
   const handleCheck = ({ target: { checked, name } }) => {
-    const spanText = document.getElementById(`${name}`);
-    if (checked) spanText.className = 'ingredient-item';
-    else spanText.className = '';
+    const labelText = document.getElementById(`${name}`);
+    if (checked) {
+      labelText.className = 'ingredient-item';
+
+      const typeRecipe = pathname.includes('drinks') ? 'drinks' : 'meals';
+      const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+
+      if (!inProgressRecipes[typeRecipe][id]) {
+        inProgressRecipes[typeRecipe][id] = [];
+      }
+      inProgressRecipes[typeRecipe][id].push(name);
+
+      localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipes));
+    } else {
+      labelText.className = '';
+
+      const typeRecipe = pathname.includes('drinks') ? 'drinks' : 'meals';
+      const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+
+      const doneRecipes = inProgressRecipes[typeRecipe][id]
+        .filter((element) => element !== name);
+
+      inProgressRecipes[typeRecipe][id] = doneRecipes;
+
+      if (inProgressRecipes[typeRecipe][id].length === 0) {
+        delete inProgressRecipes[typeRecipe][id];
+      }
+
+      localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipes));
+    }
   };
 
   return (
