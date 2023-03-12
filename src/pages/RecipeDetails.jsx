@@ -78,6 +78,7 @@ function RecipeDetails() {
     } else {
       localStorage.setItem('favoriteRecipes', JSON.stringify([newFavoriteRecipe]));
     }
+    setIsFavorite(true);
   }, [detailsRecipe, pathname, id]);
 
   const isFavoriteRecipe = useCallback(() => {
