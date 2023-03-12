@@ -22,7 +22,8 @@ function Login() {
     const user = { email };
     localStorage.setItem('user', JSON.stringify(user));
     localStorage.setItem('doneRecipes', JSON.stringify([]));
-    localStorage.setItem('inProgressRecipes', JSON.stringify({}));
+    localStorage.setItem('inProgressRecipes', JSON.stringify({ drinks: {}, meals: {} }));
+    localStorage.setItem('favoriteRecipes', JSON.stringify([]));
     history.push('/meals');
   };
 

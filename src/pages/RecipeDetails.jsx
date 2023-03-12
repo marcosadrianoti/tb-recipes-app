@@ -43,8 +43,10 @@ function RecipeDetails() {
     const getInProgressRecipes = localStorage.getItem('inProgressRecipes');
     if (getInProgressRecipes) {
       const objInProgressRecipes = JSON.parse(getInProgressRecipes);
-      const isInProgress = Object.keys(objInProgressRecipes[typeRecipe]).includes(id);
-      setIsInProgressRecipes(isInProgress);
+      if (objInProgressRecipes[typeRecipe] !== undefined) {
+        const isInProgress = Object.keys(objInProgressRecipes[typeRecipe]).includes(id);
+        setIsInProgressRecipes(isInProgress);
+      }
     }
   }, [id, pathname]);
 
@@ -53,6 +55,29 @@ function RecipeDetails() {
     copy(link);
     setIsCopiedLink(true);
   }, [pathname]);
+
+  const setFavoriteInLocalStorage = useCallback(async () => {
+    const typeRecipe = pathname.includes('drinks') ? 'drinks' : 'meals';
+    const normalizedTypeRecipe = typeRecipe.replace(/^\w/, (c) => c.toUpperCase()).replace('s', '');
+    const newFavoriteRecipe = {
+      id,
+      type: typeRecipe.replace('s', ''),
+      nationality: detailsRecipe[0].strArea || '',
+      category: detailsRecipe[0].strCategory || '',
+      alcoholicOrNot: detailsRecipe[0].strAlcoholic || '',
+      name: detailsRecipe[0][`str${normalizedTypeRecipe}`],
+      image: detailsRecipe[0][`str${normalizedTypeRecipe}Thumb`],
+    };
+    if (localStorage.getItem('favoriteRecipes') !== null) {
+      const ListInProgressRecipes = await JSON.parse(
+        localStorage.getItem('favoriteRecipes'),
+      );
+      ListInProgressRecipes.push(newFavoriteRecipe);
+      localStorage.setItem('favoriteRecipes', JSON.stringify(ListInProgressRecipes));
+    } else {
+      localStorage.setItem('favoriteRecipes', JSON.stringify([newFavoriteRecipe]));
+    }
+  }, [detailsRecipe, pathname, id]);
 
   useMemo(() => {
     if (detailsRecipe[0]) {
@@ -95,7 +120,7 @@ function RecipeDetails() {
         data-testid="favorite-btn"
         type="button"
         className="sucess"
-        // onClick={ () => history.push(`${pathname}/in-progress`) }
+        onClick={ () => setFavoriteInLocalStorage() }
       >
         Favorite
       </button>
