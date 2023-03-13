@@ -56,13 +56,11 @@ function DoneRecipes() {
             {`${recipe.name}`}
           </p>
 
-          <div data-testid={ `${index}-horizontal-top-text` }>
-            <p
-              data-testid={ `${index}-horizontal-top-text` }
-            >
-              {`${recipe.nationality} - ${recipe.category}`}
-            </p>
-          </div>
+          <p
+            data-testid={ `${index}-horizontal-top-text` }
+          >
+            {`${recipe.nationality} - ${recipe.category} - ${recipe.alcoholicOrNot}`}
+          </p>
 
           <p
             data-testid={ `${index}-horizontal-done-date` }
@@ -75,16 +73,20 @@ function DoneRecipes() {
               key={ ind }
               data-testid={ `${index}-${recipe.tags[ind]}-horizontal-tag` }
             >
-              {recipe.tags[i]}
+              {recipe.tags[ind]}
             </span>
           ))}
 
           <button
             type="button"
-            data-testid={ `${index}-horizontal-share-btn` }
-            src={ shareIcon }
+
+            // src={ shareIcon }
           >
-            <img src={ shareIcon } alt="Imagem do botão Compartilhar" />
+            <img
+              data-testid={ `${index}-horizontal-share-btn` }
+              src={ shareIcon }
+              alt="Imagem do botão Compartilhar"
+            />
           </button>
         </div>
       ))}
