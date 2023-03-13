@@ -131,13 +131,12 @@ function RecipeDetails() {
       </button>
 
       <button
-        data-testid="favorite-btn"
         type="button"
         className="sucess"
         onClick={ () => setFavoriteInLocalStorage() }
-        src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
       >
         <img
+          data-testid="favorite-btn"
           src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
           alt="Favorite-Icon"
         />
