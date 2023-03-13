@@ -18,31 +18,36 @@ function DoneRecipes() {
   }, [doneRecipe]);
 
   return (
-    <>
+    <div className="done-recipes-container">
       <Header />
-      <button
-        type="button"
-        data-testid="filter-by-all-btn"
-      >
-        All
-      </button>
+      <div className="filter-done-buttons">
+        <button
+          type="button"
+          data-testid="filter-by-all-btn"
+          className="filter-by-all-btn"
+        >
+          <img src="https://imgur.com/9YvHMla.png" alt="all" />
+        </button>
 
-      <button
-        type="button"
-        data-testid="filter-by-meal-btn"
-      >
-        Meals
-      </button>
+        <button
+          type="button"
+          data-testid="filter-by-meal-btn"
+          className="filter-by-meal-btn"
+        >
+          <img src="https://imgur.com/DevsQIv.png" alt="meals" />
+        </button>
 
-      <button
-        type="button"
-        data-testid="filter-by-drink-btn"
-      >
-        Drinks
-      </button>
+        <button
+          type="button"
+          data-testid="filter-by-drink-btn"
+          className="filter-by-drink-btn"
+        >
+          <img src="https://imgur.com/wzkqMLT.png" alt="drink" />
+        </button>
+      </div>
 
       {recipes.map((recipe, index) => (
-        <div key={ index }>
+        <div key={ index } className="recipes-done-container">
           <img
             src={ recipe.image }
             alt="IMAGEM DA SOBREMESA"
@@ -52,6 +57,7 @@ function DoneRecipes() {
 
           <p
             data-testid={ `${index}-horizontal-name` }
+            className="recipe-name"
           >
             {`${recipe.name}`}
           </p>
@@ -79,7 +85,7 @@ function DoneRecipes() {
 
           <button
             type="button"
-
+            className="share-btn"
             // src={ shareIcon }
           >
             <img
@@ -90,7 +96,7 @@ function DoneRecipes() {
           </button>
         </div>
       ))}
-    </>
+    </div>
   );
 }
 
