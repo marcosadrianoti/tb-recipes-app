@@ -1,38 +1,21 @@
-import React from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import shareIcon from '../images/shareIcon.svg';
 import Header from '../components/Header';
 
 function DoneRecipes() {
-  const receitasTeste = [
-    {
-      id: 1,
-      type: 'meal',
-      nationality: 'Italian',
-      category: 'Vegetarian',
-      alcoholicOrNot: '',
-      name: 'Spicy Arrabiata Penne',
-      image: 'IMAGEM DA RECEITA',
-      doneDate: '23/06/2020',
-      tags: ['Pasta', 'Curry'],
-    },
-    {
-      id: 2,
-      type: 'meal',
-      nationality: 'brazilian',
-      category: 'dessert',
-      alcoholicOrNot: '',
-      name: 'brigadeirão',
-      image: 'IMAGEM DA RECEITA',
-      doneDate: '25/02/2023',
-      tags: ['Pasta', 'Curry'],
-    },
-  ];
+  const [recipes, setRecipes] = useState([]);
 
-  const tags = receitasTeste.map((receita) => receita.tags);
+  const doneRecipe = useCallback(() => {
+    const getDoneRecipes = localStorage.getItem('doneRecipes');
+    if (getDoneRecipes) {
+      const arrDoneRecipes = JSON.parse(getDoneRecipes);
+      setRecipes(arrDoneRecipes);
+    }
+  }, []);
 
-  const images = [
-    'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg',
-  ];
+  useEffect(() => {
+    doneRecipe();
+  }, [doneRecipe]);
 
   return (
     <>
@@ -58,40 +41,41 @@ function DoneRecipes() {
         Drinks
       </button>
 
-      {receitasTeste.map((receita, index) => (
+      {recipes.map((recipe, index) => (
         <div key={ index }>
           <img
-            src={ images[0] }
+            src={ recipe.image }
             alt="IMAGEM DA SOBREMESA"
+            style={ { width: '200px' } }
             data-testid={ `${index}-horizontal-image` }
           />
 
           <p
             data-testid={ `${index}-horizontal-name` }
           >
-            {`${receitasTeste[index].name}`}
+            {`${recipe.name}`}
           </p>
 
           <div data-testid={ `${index}-horizontal-top-text` }>
             <p
               data-testid={ `${index}-horizontal-top-text` }
             >
-              {`${receitasTeste[index].nationality} - ${receitasTeste[index].category}`}
+              {`${recipe.nationality} - ${recipe.category}`}
             </p>
           </div>
 
           <p
             data-testid={ `${index}-horizontal-done-date` }
           >
-            {`${receitasTeste[index].doneDate}`}
+            {`${recipe.doneDate}`}
           </p>
 
-          {tags.map((tag, i) => (
+          {recipe.tags.map((tag, i) => (
             <span
               key={ i }
-              data-testid={ `${index}-${receitasTeste[index].tags[i]}-horizontal-tag` }
+              data-testid={ `${index}-${recipe.tags[i]}-horizontal-tag` }
             >
-              {receitasTeste[index].tags[i]}
+              {recipe.tags[i]}
             </span>
           ))}
 
