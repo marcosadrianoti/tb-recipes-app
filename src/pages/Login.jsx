@@ -18,10 +18,35 @@ function Login() {
     else setIsDisable(true);
   }, [password, email]);
 
+  const receitasTeste = [
+    {
+      id: 1,
+      type: 'meal',
+      nationality: 'Italian',
+      category: 'Vegetarian',
+      alcoholicOrNot: '',
+      name: 'Spicy Arrabiata Penne',
+      image: 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg',
+      doneDate: '23/06/2020',
+      tags: ['Pasta', 'Curry'],
+    },
+    {
+      id: 2,
+      type: 'meal',
+      nationality: 'brazilian',
+      category: 'dessert',
+      alcoholicOrNot: '',
+      name: 'brigadeirão',
+      image: 'https://www.themealdb.com/images/media/meals/58oia61564916529.jpg',
+      doneDate: '25/02/2023',
+      tags: ['teste', 'aaaaaaa'],
+    },
+  ];
+
   const handleClick = () => {
     const user = { email };
     localStorage.setItem('user', JSON.stringify(user));
-    localStorage.setItem('doneRecipes', JSON.stringify([]));
+    localStorage.setItem('doneRecipes', JSON.stringify(receitasTeste));
     localStorage.setItem('inProgressRecipes', JSON.stringify({ drinks: {}, meals: {} }));
     localStorage.setItem('favoriteRecipes', JSON.stringify([]));
     history.push('/meals');
