@@ -70,10 +70,10 @@ function DoneRecipes() {
             {`${recipe.doneDate}`}
           </p>
 
-          {recipe.tags.map((tag, i) => (
+          {recipe.tags.map((tag, ind) => (
             <span
-              key={ i }
-              data-testid={ `${index}-${recipe.tags[i]}-horizontal-tag` }
+              key={ ind }
+              data-testid={ `${index}-${recipe.tags[ind]}-horizontal-tag` }
             >
               {recipe.tags[i]}
             </span>
