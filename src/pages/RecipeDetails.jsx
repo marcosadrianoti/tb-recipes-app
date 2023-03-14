@@ -113,46 +113,50 @@ function RecipeDetails() {
 
   return (
     <div>
-      {
-        isCopiedLink && (
-          <h2>Link copied!</h2>
-        )
-      }
-      <button
-        data-testid="share-btn"
-        type="button"
-        className="sucess"
-        onClick={ () => copyLink() }
-      >
-        <img
-          src={ shareIcon }
-          alt="Share-icon"
-        />
-      </button>
+      <div className="header-recipe-container">
+        {
+          isCopiedLink && (
+            <h2>Link copied!</h2>
+          )
+        }
+        <h2 data-testid="recipe-category">
+          {detailsRecipe[0]?.strAlcoholic || detailsRecipe[0]?.strCategory}
+        </h2>
+        <div className="btn-recipe">
+          <button
+            data-testid="share-btn"
+            type="button"
+            className="sucess share-btn"
+            onClick={ () => copyLink() }
+          >
+            <img
+              src={ shareIcon }
+              alt="Share-icon"
+            />
+          </button>
 
-      <button
-        type="button"
-        className="sucess"
-        onClick={ () => setFavoriteInLocalStorage() }
-      >
-        <img
-          data-testid="favorite-btn"
-          src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
-          alt="Favorite-Icon"
-        />
-      </button>
-
+          <button
+            type="button"
+            className="sucess share-btn"
+            onClick={ () => setFavoriteInLocalStorage() }
+          >
+            <img
+              data-testid="favorite-btn"
+              src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
+              alt="Favorite-Icon"
+            />
+          </button>
+        </div>
+      </div>
+      <h1 data-testid="recipe-title" className="recipe-title">
+        {detailsRecipe[0]?.strMeal || detailsRecipe[0]?.strDrink}
+      </h1>
       <img
         data-testid="recipe-photo"
+        className="img-recipe"
         src={ detailsRecipe[0]?.strMealThumb || detailsRecipe[0]?.strDrinkThumb }
         alt="img-recipe"
       />
-      <h1 data-testid="recipe-title">
-        {detailsRecipe[0]?.strMeal || detailsRecipe[0]?.strDrink}
-      </h1>
-      <h2 data-testid="recipe-category">
-        {detailsRecipe[0]?.strAlcoholic || detailsRecipe[0]?.strCategory}
-      </h2>
       <ul>
         {arrayIngredients.map((ingredient, index) => ingredient && (
           <li
@@ -174,17 +178,19 @@ function RecipeDetails() {
             .replace('youtube', 'youtube-nocookie') }
         />
       )}
-      <RecomendedRecipes />
+      <div className="recomended-start-recipe">
+        <RecomendedRecipes />
 
-      { isDoneRecipe || (
-        <button
-          data-testid="start-recipe-btn"
-          type="button"
-          className="sucess w-50 button-start-recipe"
-          onClick={ () => history.push(`${pathname}/in-progress`) }
-        >
-          {isInProgressRecipes ? 'Continue Recipe' : 'Start Recipe'}
-        </button>)}
+        { isDoneRecipe || (
+          <button
+            data-testid="start-recipe-btn"
+            type="button"
+            className="sucess w-50 button-start-recipe"
+            onClick={ () => history.push(`${pathname}/in-progress`) }
+          >
+            {isInProgressRecipes ? 'Continue Recipe' : 'Start Recipe'}
+          </button>)}
+      </div>
     </div>
   );
 }

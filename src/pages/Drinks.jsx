@@ -10,6 +10,7 @@ function Drinks() {
   const count = 5;
   return (
     <>
+      <Header />
       <div className="top-container">
         <div className="categories-buttons-container">
           {drinksCategories.slice(0, count).map(({ strCategory }) => (
@@ -28,7 +29,6 @@ function Drinks() {
           Remove All Filters
         </button>
       </div>
-      <Header />
       <Recipes />
       <Footer />
     </>

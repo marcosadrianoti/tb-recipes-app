@@ -25,37 +25,44 @@ function Header() {
   }, [pathname]);
 
   return (
-    <div>
-      <h1 data-testid="page-title">{ urlToTitle(pathname) }</h1>
-      <button
-        onClick={ () => {
-          history.push('/profile');
-        } }
-      >
-        <img
-          src={ profileIcon }
-          data-testid="profile-top-btn"
-          alt="profile-top-btn"
-        />
-      </button>
-      { !isHiddenSearchTopBtn && (
-        <button
-          onClick={ () => {
-            setIsHiddenTextForSearch(!isHiddenTextForSearch);
-          } }
-        >
-          <img
-            src={ searchIcon }
-            data-testid="search-top-btn"
-            alt="search-top-btn"
-          />
-        </button>
-      ) }
-      { isHiddenTextForSearch && (
-        <div className="seach-container">
-          <SearchBar />
+    <div className="header-container">
+      <div className="logo-btns">
+        <img src="https://imgur.com/zBnKe4p.png" className="logo-app-minor" alt="logo" />
+        <div className="header-btns-container">
+          <button
+            className="profile-top-btn"
+            onClick={ () => {
+              history.push('/profile');
+            } }
+          >
+            <img
+              src={ profileIcon }
+              data-testid="profile-top-btn"
+              alt="profile-top-btn"
+            />
+          </button>
+          { !isHiddenSearchTopBtn && (
+            <button
+              className="search-top-btn"
+              onClick={ () => {
+                setIsHiddenTextForSearch(!isHiddenTextForSearch);
+              } }
+            >
+              <img
+                src={ searchIcon }
+                data-testid="search-top-btn"
+                alt="search-top-btn"
+              />
+            </button>
+          ) }
+          { isHiddenTextForSearch && (
+            <div className="seach-container">
+              <SearchBar />
+            </div>
+          ) }
         </div>
-      ) }
+      </div>
+      <h1 data-testid="page-title">{ urlToTitle(pathname) }</h1>
     </div>
   );
 }

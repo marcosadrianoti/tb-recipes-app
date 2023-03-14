@@ -57,10 +57,11 @@ function Login() {
   }, [validForm]);
 
   return (
-    <div>
+    <div className="login-container">
+      <img src="https://imgur.com/zBnKe4p.png" className="logo-app" alt="logo" />
       <label htmlFor="input-email">
         <input
-          placeholder="Digite seu email"
+          placeholder="e-mail"
           data-testid="email-input"
           type="text"
           name="email"
@@ -72,7 +73,7 @@ function Login() {
 
       <label htmlFor="input-password">
         <input
-          placeholder="Digite sua senha"
+          placeholder="password"
           data-testid="password-input"
           type="password"
           name="password"
@@ -92,7 +93,7 @@ function Login() {
         } }
         disabled={ isDisabled }
       >
-        Entrar
+        Login
       </button>
     </div>
   );
