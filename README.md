@@ -94,13 +94,13 @@ cd meu-diretorio
 Clone o projeto com o comando `git clone`:
 
 ```bash
-git clone git@github.com:marcosadrianoti/tb-starwars-planets-search.git
+git clone git@github.com:marcosadrianoti/tb-recipes-app.git
 ```
 
 Acesse o diretório do projeto com o comando `cd`:
 
 ```bash
-cd tb-starwars-planets-search
+cd tb-recipes-app
 ```
 
 Instale as dependências executando:
