@@ -5,6 +5,7 @@ Projeto desenvolvido em grupo durante o curso de Desenvolvimento Web na Trybe. D
 <summary><strong>Objetivos do projeto:</strong></summary>
 
   * Desenvolver um app de receitas, utilizando o que há de mais moderno dentro do ecossistema `React`: _Hooks_ e _Context API_. Nele será possível: ver, buscar, filtrar, favoritar e acompanhar o progresso de preparação de receitas de comidas e bebidas. ⚠️ A base de dados serão 2 APIs distintas, uma para comidas e outra para bebidas.
+  * Criar a oportunidade de trabalhar em grupo usando kanban.
   * Verificar se eu era capaz de:
     * Utilizar `Redux` para gerenciar estado.
     * Utilizar a biblioteca `React-Redux`.
