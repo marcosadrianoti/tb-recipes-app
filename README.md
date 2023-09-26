@@ -17,22 +17,22 @@ Projeto desenvolvido em grupo durante o curso de Desenvolvimento Web na Trybe. D
 <details>
 <summary><strong> Requisitos do projeto:</strong></summary>
 
-  * Desenvolva os testes unitários de maneira que a cobertura seja de, no mínimo, 90%
-  * Crie todos os elementos que devem respeitar os atributos descritos no protótipo para a tela de login
-  * Desenvolva a tela de maneira que a pessoa consiga escrever seu email no input de email e sua senha no input de senha
-  * Desenvolva a tela de maneira que o formulário só seja válido após um email válido e uma senha de mais de 6 caracteres serem preenchidos
-  * Após a submissão do formulário, salve no localStorage o e-mail da pessoa usuária na chave `user`
-  * Redirecione a pessoa usuária para a tela principal de receitas de comidas após a submissão e validação com sucesso do login
-  * Implemente o header de acordo com a necessidade de cada tela
-  * Redirecione a pessoa usuária para a tela de perfil ao clicar no botão de perfil
-  * Desenvolva o botão de busca que, ao ser clicado, a barra de busca deve aparecer. O mesmo serve para escondê-la
-  * Implemente os elementos da barra de busca respeitando os atributos descritos no protótipo
-  * Implemente 3 radio buttons na barra de busca: Ingredient, Name e First letter
-  * Busque na API de comidas caso a pessoa esteja na página de comidas, e na API de bebidas caso esteja na de bebidas
-  * Redirecione para a tela de detalhes da receita caso apenas uma receita seja encontrada, com o ID da mesma na URL
-  * Caso a busca retorne mais de uma receita, renderize as 12 primeiras encontradas, exibindo a imagem e o nome de cada uma
-  * Exiba um `alert` caso nenhuma receita seja encontrada
-  * Implemente o menu inferior posicionando-o de forma fixa e contendo 2 ícones: um para comidas e outro para bebidas
+  * Desenvolver os testes unitários de maneira que a cobertura seja de, no mínimo, 90%.
+  * Criar todos os elementos que devem respeitar os atributos descritos no protótipo para a tela de login.
+  * Desenvolver a tela de maneira que a pessoa consiga escrever seu email no input de email e sua senha no input de senha.
+  * Desenvolver a tela de maneira que o formulário só seja válido após um email válido e uma senha de mais de 6 caracteres serem preenchidos.
+  * Após a submissão do formulário, salvar no localStorage o e-mail da pessoa usuária na chave `user`.
+  * Redirecionar a pessoa usuária para a tela principal de receitas de comidas após a submissão e validação com sucesso do login.
+  * Implementar o header de acordo com a necessidade de cada tela.
+  * Redirecionar a pessoa usuária para a tela de perfil ao clicar no botão de perfil.
+  * Desenvolver o botão de busca que, ao ser clicado, a barra de busca deve aparecer. O mesmo serve para escondê-la.
+  * Implementar os elementos da barra de busca respeitando os atributos descritos no protótipo.
+  * Implementar 3 radio buttons na barra de busca: Ingredient, Name e First letter.
+  * Buscar na API de comidas caso a pessoa esteja na página de comidas, e na API de bebidas caso esteja na de bebidas.
+  * Redirecionar para a tela de detalhes da receita caso apenas uma receita seja encontrada, com o ID da mesma na URL.
+  * Caso a busca retorne mais de uma receita, renderizar as 12 primeiras encontradas, exibindo a imagem e o nome de cada uma.
+  * Exibir um `alert` caso nenhuma receita seja encontrada.
+  * Implementar o menu inferior posicionando-o de forma fixa e contendo 2 ícones: um para comidas e outro para bebidas.
   * Exiba o menu inferior apenas nas telas indicadas pelo protótipo
   * Redirecione a pessoa usuária para a tela correta ao clicar em cada ícone no menu inferior
   * Carregue as 12 primeiras receitas de comidas ou bebidas, uma em cada card
