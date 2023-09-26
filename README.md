@@ -4,7 +4,7 @@ Projeto desenvolvido em grupo durante o curso de Desenvolvimento Web na Trybe. D
 <details>
 <summary><strong>Objetivos do projeto:</strong></summary>
 
-  * Desenvolver uma lista com filtros de planetas do universo de Star Wars usando `Context API` e `Hooks` para controlar os estados globais.
+  * Desenvolver um app de receitas, utilizando o que há de mais moderno dentro do ecossistema `React`: _Hooks_ e _Context API_. Nele será possível: ver, buscar, filtrar, favoritar e acompanhar o progresso de preparação de receitas de comidas e bebidas. ⚠️ A base de dados serão 2 APIs distintas, uma para comidas e outra para bebidas..
   * Verificar se eu era capaz de:
     * Utilizar a `Context API` do `React` para gerenciar estado.
     * Utilizar o `React Hook useState`.
